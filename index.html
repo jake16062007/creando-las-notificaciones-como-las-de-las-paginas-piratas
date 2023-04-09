@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="#">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification API</title>
+    <script src="./custom.js" defer></script>
+</head>
+<body>
+    <section style="text-align: center; margin-top: 10%;">
+        <button style="padding: 7px;" id="notificar">
+            Notificar...
+        </button>
+        <button style="padding: 7px;" id="vernotificacion">
+            Ver Notificacion...
+        </button> 
+    </section>
+  <script>const notificarBtn = document.querySelector('#notificar');
+
+notificarBtn.addEventListener('click', () => {
+    Notification.requestPermission().then(resultado => {
+        console.log('Respuesta: ', resultado);
+    })
+})
+
+const verNotificacion = document.querySelector('#vernotificacion');
+
+verNotificacion.addEventListener('click', () => {
+    if (Notification.permission === 'granted') {
+        const notificacion = new Notification('Esta es la notificacion', {
+            icon: 'hora.png',
+            body: 'Tutoriales de js con blackCode'
+        });
+
+        notificacion.onclick = function(){
+            window.open('http://google.com');
+        }
+    }
+})</script>
+</body>
+</html>
