@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>notificacion</title>
-    <script src="./custom.js" defer></script>
+    <title>Notificación</title>
 </head>
 <body>
     <section style="text-align: center; margin-top: 10%;">
@@ -14,30 +13,42 @@
             Notificar...
         </button>
         <button style="padding: 7px;" id="vernotificacion">
-            Ver Notificacion...
+            Ver Notificación...
         </button> 
     </section>
-  <script>const notificarBtn = document.querySelector('#notificar');
+    <script>
+        const notificarBtn = document.querySelector('#notificar');
 
-notificarBtn.addEventListener('click', () => {
-    Notification.requestPermission().then(resultado => {
-        console.log('Respuesta: ', resultado);
-    })
-})
-
-const verNotificacion = document.querySelector('#vernotificacion');
-
-verNotificacion.addEventListener('click', () => {
-    if (Notification.permission === 'granted') {
-        const notificacion = new Notification('Miraxus', {
-            icon: 'images.jpeg',
-            body: 'agenten te ajuda, nos contate'
+        notificarBtn.addEventListener('click', () => {
+            if (Notification.permission !== 'granted') {
+                askForNotificationPermission();
+            } else {
+                console.log('Notificaciones ya están activadas.');
+            }
         });
 
-        notificacion.onclick = function(){
-            window.open('https://josemoises2007.github.io/pagina2/');
+        const verNotificacion = document.querySelector('#vernotificacion');
+
+        verNotificacion.addEventListener('click', () => {
+            if (Notification.permission === 'granted') {
+                const notificacion = new Notification('Miraxus', {
+                    icon: 'images.jpeg',
+                    body: 'Agente te ayuda, nos contacte'
+                });
+
+                notificacion.onclick = function() {
+                    window.open('https://josemoises2007.github.io/pagina2/');
+                }
+            } else {
+                askForNotificationPermission();
+            }
+        });
+
+        function askForNotificationPermission() {
+            Notification.requestPermission().then(resultado => {
+                console.log('Respuesta: ', resultado);
+            });
         }
-    }
-})</script>
+    </script>
 </body>
 </html>
